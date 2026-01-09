@@ -1,0 +1,46 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class Livro {
+  id : Long
+  titulo : String
+  isbn : String
+}
+
+class Edicao {
+  id : Long
+  numero : int
+  anoPublicacao : int
+}
+
+class TabelaConteudos {
+  id : Long
+  totalEntradas : int
+}
+
+abstract class EntradaConteudo {
+  id : Long
+  titulo : String
+  pagina : int
+  ordem : int
+}
+
+class Parte
+class Capitulo
+class Subcapitulo
+class Seccao
+
+EntradaConteudo <|-left- Parte
+EntradaConteudo <|-left- Capitulo
+EntradaConteudo <|-left- Subcapitulo
+EntradaConteudo <|-- Seccao
+
+Livro "1" --> "1..*" Edicao : tem
+Edicao "1" --> "1" TabelaConteudos : possui
+
+TabelaConteudos "1" --> "1..*" Parte : contém
+Parte "1" --> "0..*" Capitulo : contém
+Capitulo "1" --> "0..*" Subcapitulo : contém
+Subcapitulo "1" --> "0..*" Seccao : contém
+
+@enduml
